@@ -1,0 +1,16 @@
+{
+  "name": "Winter Arc",
+  "short_name": "Winter Arc",
+  "description": "Meine Regeln für den Winter – jeden Tag zum Abhaken.",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#dbe9f0",
+  "theme_color": "#dbe9f0",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
