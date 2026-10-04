@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Winter Arc</title>
+<meta name="description" content="Meine Winter-Arc-Regeln: Wasser, Sport, Schlaf, Lesen und mehr – jeden Tag zum Abhaken.">
+<meta name="theme-color" content="#dbe9f0">
+<meta name="apple-mobile-web-app-title" content="Winter Arc">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Winter Arc">
+<meta property="og:description" content="Meine Regeln für den Winter – jeden Tag zum Abhaken.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23dbe9f0'/%3E%3Cpath d='M8 50 C18 6 46 6 56 50' fill='none' stroke='%238fb4c8' stroke-width='4'/%3E%3Ccircle cx='48' cy='29' r='7' fill='%23e4472b'/%3E%3C/svg%3E">
+<style>
+:root{--snow:#f3f6f8;--ice:#dbe9f0;--frost:#8fb4c8;--ink:#0f2a36;--mute:#3f5a68;--flare:#e4472b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--snow);color:var(--ink);font:1.0625rem/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,li b{font-family:"Avenir Next Condensed","Arial Narrow","Roboto Condensed","Helvetica Neue",Impact,sans-serif}
+
+header{background:var(--ice);overflow:hidden;padding:clamp(3rem,9vw,6rem) 1.5rem clamp(2.5rem,6vw,4rem)}
+.wrap{position:relative;max-width:60rem;margin:0 auto}
+.wrap svg{position:absolute;left:0;bottom:-1.5rem;width:100%;height:auto;z-index:0}
+.hero{position:relative;z-index:1}
+h1{font-size:clamp(4.5rem,18vw,11rem);font-weight:800;line-height:.85;letter-spacing:-.01em}
+.sub{margin-top:1.25rem;font-size:1.25rem;color:var(--mute)}
+.goal{margin-top:.5rem;font-weight:500}
+.goal::before{content:"";display:inline-block;width:.7rem;height:.7rem;margin-right:.6rem;border-radius:50%;background:var(--flare)}
+
+main{max-width:60rem;margin:0 auto;padding:1.5rem 1.5rem 4rem}
+section{display:grid;grid-template-columns:12rem 1fr;gap:1rem 2rem;padding:2.25rem 0;border-top:1px solid var(--frost)}
+section:first-child{border-top:0}
+h2{font-size:2.25rem;font-weight:700;line-height:1}
+ul{list-style:none}
+li{display:grid;grid-template-columns:minmax(8.5rem,12rem) 1fr;align-items:baseline;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--ice)}
+li:last-child{border-bottom:0}
+li b{font-size:clamp(1.5rem,4.5vw,2rem);font-weight:700;line-height:1.1}
+li span{color:var(--mute)}
+
+.check label{display:grid;grid-column:1/-1;grid-template-columns:minmax(8.5rem,12rem) 1fr auto;align-items:baseline;gap:1rem;cursor:pointer}
+.check input{grid-row:1;grid-column:3;align-self:center;appearance:none;-webkit-appearance:none;width:1.6rem;height:1.6rem;border:2px solid var(--ink);border-radius:50%;background:transparent;cursor:pointer}
+.check input:checked{background:var(--flare);border-color:var(--flare)}
+.check input:checked::after{content:"";display:block;width:.35rem;height:.7rem;margin:.1rem auto 0;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.check input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.check input:checked ~ b,.check input:checked ~ span{opacity:.55}
+.check input:checked ~ span{text-decoration:line-through}
+
+.stat{margin-top:.9rem;color:var(--mute)}
+.stat b{font-family:"Avenir Next Condensed","Arial Narrow","Roboto Condensed","Helvetica Neue",Impact,sans-serif;font-size:1.75rem;font-weight:700;line-height:1;color:var(--ink)}
+.bar{height:.5rem;margin-top:.5rem;background:var(--ice);box-shadow:inset 0 0 0 1px var(--frost);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--flare);transition:width .3s}
+@media(prefers-reduced-motion:reduce){.bar i{transition:none}}
+
+@media(max-width:640px){section{grid-template-columns:1fr;gap:.5rem}}
+.count{grid-template-columns:minmax(8.5rem,12rem) 1fr auto;align-items:center}
+.val{font-style:normal}
+.btns{display:flex;gap:.5rem}
+.btns button{min-width:2.75rem;height:2.75rem;padding:0 .75rem;border:2px solid var(--ink);border-radius:99px;background:transparent;color:var(--ink);font:600 1rem system-ui,-apple-system,sans-serif;cursor:pointer}
+.btns .plus{background:var(--ink);color:var(--snow)}
+.btns button:active{transform:scale(.95)}
+.btns button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.count.done b,.count.done span{opacity:.55}
+.count.done b::after{content:" ✓";color:var(--flare)}
+@media(max-width:640px){.count{grid-template-columns:1fr auto;gap:.15rem 1rem}.count span{grid-column:1;grid-row:2}.count .btns{grid-column:2;grid-row:1/3}}
+[hidden]{display:none!important}
+.btns input{flex:1;min-width:0;height:2.75rem;padding:0 1rem;border:2px solid var(--ink);border-radius:99px;background:transparent;color:var(--ink);font:inherit}
+.btns input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.note{margin:.75rem 0;font-size:.9rem;color:var(--mute)}
+[hidden]{display:none!important}
+.pill{min-height:2.75rem;padding:0 1.1rem;border:2px solid var(--ink);border-radius:99px;background:var(--ink);color:var(--snow);font:600 1rem system-ui,-apple-system,sans-serif;cursor:pointer}
+.pill.ghost{background:transparent;color:var(--ink)}
+.pill:focus-visible,#nick:focus-visible,#othercode:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+#join,#link{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:1rem}
+#join label,#link label{width:100%;color:var(--mute)}
+#nick,#othercode{flex:1;min-width:10rem;height:2.75rem;padding:0 1rem;border:2px solid var(--ink);border-radius:99px;background:transparent;color:var(--ink);font:inherit}
+.board li{grid-template-columns:minmax(8.5rem,12rem) 1fr auto}
+.board .me span{color:var(--ink);font-weight:600}
+.board small{color:var(--mute);font-size:.95rem;white-space:nowrap}
+.note{margin:.8rem 0;color:var(--mute);font-size:.9rem}
+@media(max-width:640px){.board li{grid-template-columns:5.5rem 1fr auto;gap:.6rem}}
+#link{margin-top:1.5rem;margin-bottom:0}
+code{display:inline-block;margin:.25rem 0 .75rem;padding:.35rem .6rem;border-radius:.4rem;background:var(--ice);font:.95rem ui-monospace,Menlo,Consolas,monospace;word-break:break-all}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <svg viewBox="0 0 900 260" fill="none" aria-hidden="true">
+      <path d="M40 240 C240 -40 660 -40 860 240" stroke="#8fb4c8" stroke-width="2"/>
+      <circle cx="717" cy="106" r="11" fill="#e4472b"/>
+    </svg>
+    <div class="hero">
+      <h1>Winter Arc</h1>
+      <p class="sub">Meine Regeln für den Winter</p>
+      <p class="goal">Ziel: einen KI-Trading-Bot bauen</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div>
+      <h2>Jeden Tag</h2>
+      <p class="stat"><b id="done">0</b> von <span id="total">6</span> erledigt</p>
+      <div class="bar" role="progressbar" aria-label="Fortschritt heute" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><i id="fill"></i></div>
+      <p class="stat"><b id="streak">0</b> <span id="streakLabel">Tage in Folge</span></p>
+    </div>
+    <ul id="daily">
+      <li class="count" data-id="water" data-target="3" data-step="0.25"><b><i class="val">0</i> L</b><span>Wasser trinken, Ziel 3–4 Liter</span><div class="btns"><button type="button" class="minus" aria-label="0,25 Liter weniger">−</button><button type="button" class="plus" aria-label="0,25 Liter mehr">+0,25</button></div></li>
+      <li class="check" data-id="sport"><label><input type="checkbox"><b>30–40 Min</b><span>Sport</span></label></li>
+      <li class="count" data-id="push" data-target="150" data-step="10"><b><i class="val">0</i></b><span>Liegestütze, Ziel 150</span><div class="btns"><button type="button" class="minus" aria-label="10 weniger">−</button><button type="button" class="plus" aria-label="10 mehr">+10</button></div></li>
+      <li class="check" data-id="read"><label><input type="checkbox"><b>15 Seiten</b><span>lesen</span></label></li>
+      <li class="check" data-id="bed"><label><input type="checkbox"><b>21:30</b><span>im Bett sein</span></label></li>
+      <li class="check" data-id="phone"><label><input type="checkbox"><b>unter 45 Min</b><span>Handy, am besten</span></label></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Jede Woche</h2>
+    <ul>
+      <li><b>1×</b><span>laufen oder sprinten gehen</span></li>
+      <li><b>1× oder öfter</b><span>trainieren</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Verzicht</h2>
+    <ul>
+      <li><b>Keine</b><span>Süßigkeiten oder Fastfood</span></li>
+      <li><b>Kein</b><span>Zucker</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Dazu</h2>
+    <ul>
+      <li><b>Kalt</b><span>duschen</span></li>
+    </ul>
+  </section>
+  <section id="rank" hidden>
+    <h2>Rangliste</h2>
+    <div>
+      <form id="join">
+        <label for="nick">Spitzname</label>
+        <input id="nick" maxlength="20" autocomplete="off" required>
+        <button type="submit" class="pill">Mitmachen</button>
+      </form>
+      <p class="note" id="joined" hidden>Du bist dabei als <b id="myname"></b>. <button type="button" class="pill ghost" id="leave">Austragen</button></p>
+      <ul class="board" id="board"></ul>
+      <p class="note" id="boardmsg"></p>
+      <button type="button" class="pill ghost" id="refresh">Aktualisieren</button>
+      <p class="note">Gespeichert und öffentlich angezeigt werden nur Spitzname, Streak und dein Fortschritt von heute. Nimm bitte keinen echten Namen. Mit „Austragen" wird alles wieder gelöscht.</p>
+    </div>
+  </section>
+  <section id="sync" hidden>
+    <h2>Geräte</h2>
+    <div>
+      <div id="syncOff">
+        <p class="note">Dein Fortschritt liegt bisher nur auf diesem Gerät. Speichere ihn online, um dieselben Aufgaben auf mehreren Geräten abzuhaken.</p>
+        <button type="button" class="pill" id="syncStart">Online speichern</button>
+        <form id="link">
+          <label for="othercode">Oder Code von einem anderen Gerät eingeben</label>
+          <input id="othercode" autocomplete="off" spellcheck="false" required>
+          <button type="submit" class="pill ghost">Verbinden</button>
+        </form>
+      </div>
+      <div id="syncOnBox" hidden>
+        <p class="note">Dein Fortschritt wird online gespeichert. Gib diesen Code auf dem anderen Gerät ein:</p>
+        <code id="synccode"></code>
+        <div class="btns">
+          <button type="button" class="pill ghost" id="copycode">Kopieren</button>
+          <button type="button" class="pill ghost" id="syncStop">Trennen und online löschen</button>
+        </div>
+        <p class="note">Wer den Code kennt, kann deinen Fortschritt sehen und ändern. Gib ihn nicht weiter.</p>
+      </div>
+      <p class="note" id="syncmsg" role="status"></p>
+    </div>
+  </section>
+</main>
+<script>
+(function () {
+  var KEY = 'winterarc-days';
+  var rows = document.querySelectorAll('#daily li');
+  var days = {};
+  try { days = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+
+  function iso(d) { return d.toLocaleDateString('sv-SE'); }
+  function fmt(n) { return n.toLocaleString('de-DE', { maximumFractionDigits: 2 }); }
+  function save() {
+    entry._t = Date.now();
+    try { localStorage.setItem(KEY, JSON.stringify(days)); } catch (e) {}
+    pushSync();
+  }
+
+  // Frühere Version speicherte nur die Nummern abgehakter Zeilen
+  var OLD = ['water', 'sport', 'push', 'read', 'bed', 'phone'];
+  Object.keys(days).forEach(function (k) {
+    if (!Array.isArray(days[k])) return;
+    var o = {};
+    days[k].forEach(function (i) {
+      var row = document.querySelector('#daily [data-id="' + OLD[i] + '"]');
+      o[OLD[i]] = row && row.dataset.target ? Number(row.dataset.target) : 1;
+    });
+    days[k] = o;
+  });
+
+  function ok(row, e) {
+    var v = e[row.dataset.id] || 0;
+    return row.dataset.target ? v >= Number(row.dataset.target) : v === 1;
+  }
+  function full(day) {
+    var e = days[day];
+    if (!e) return false;
+    for (var i = 0; i < rows.length; i++) if (!ok(rows[i], e)) return false;
+    return true;
+  }
+  // Heute zählt mit, sobald alles erledigt ist; sonst reißt die Serie erst, wenn der Tag vorbei ist
+  function streak() {
+    var d = new Date(), n = 0;
+    if (full(iso(d))) n++;
+    d.setDate(d.getDate() - 1);
+    while (full(iso(d))) { n++; d.setDate(d.getDate() - 1); }
+    return n;
+  }
+
+  var today = iso(new Date());
+  var entry = days[today] = days[today] || {};
+
+  function render() {
+    var done = 0, s = streak();
+    rows.forEach(function (row) {
+      var v = entry[row.dataset.id] || 0, good = ok(row, entry);
+      if (good) done++;
+      if (row.dataset.target) {
+        row.querySelector('.val').textContent = fmt(v);
+        row.classList.toggle('done', good);
+      } else {
+        row.querySelector('input').checked = v === 1;
+      }
+    });
+    var bar = document.querySelector('.bar');
+    document.getElementById('done').textContent = done;
+    document.getElementById('total').textContent = rows.length;
+    document.getElementById('fill').style.width = (rows.length ? done / rows.length * 100 : 0) + '%';
+    bar.setAttribute('aria-valuenow', done);
+    bar.setAttribute('aria-valuemax', rows.length);
+    document.getElementById('streak').textContent = s;
+    document.getElementById('streakLabel').textContent = s === 1 ? 'Tag in Folge' : 'Tage in Folge';
+    stats = { streak: s, done: done, total: rows.length };
+    schedulePush();
+  }
+
+  rows.forEach(function (row) {
+    var id = row.dataset.id;
+    if (row.dataset.target) {
+      var step = Number(row.dataset.step);
+      row.querySelector('.plus').addEventListener('click', function () {
+        entry[id] = (entry[id] || 0) + step; save(); render();
+      });
+      row.querySelector('.minus').addEventListener('click', function () {
+        entry[id] = Math.max(0, (entry[id] || 0) - step); save(); render();
+      });
+    } else {
+      row.querySelector('input').addEventListener('change', function (e) {
+        entry[id] = e.target.checked ? 1 : 0; save(); render();
+      });
+    }
+  });
+
+  // ---- Rangliste (Supabase): URL und öffentlichen Schlüssel hier eintragen ----
+  var SB_URL = 'https://DEIN-PROJEKT.supabase.co';
+  var SB_KEY = 'DEIN-OEFFENTLICHER-SCHLUESSEL';
+  var online = /^https:\/\/[a-z0-9]+\.supabase\.co$/.test(SB_URL) && SB_KEY.indexOf('DEIN') !== 0;
+  var stats = null, pushTimer = null, profile = null;
+
+  function rpc(fn, body) {
+    var h = { 'Content-Type': 'application/json', apikey: SB_KEY };
+    if (SB_KEY.indexOf('eyJ') === 0) h.Authorization = 'Bearer ' + SB_KEY;
+    return fetch(SB_URL + '/rest/v1/rpc/' + fn, { method: 'POST', headers: h, body: JSON.stringify(body) })
+      .then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.text().then(function (t) { return t ? JSON.parse(t) : null; });
+      });
+  }
+
+  function uuid() {
+    var b = crypto.getRandomValues(new Uint8Array(16));
+    b[6] = b[6] & 15 | 64; b[8] = b[8] & 63 | 128;
+    var h = Array.prototype.map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    return h.replace(/^(.{8})(.{4})(.{4})(.{4})(.{12})$/, '$1-$2-$3-$4-$5');
+  }
+
+  function schedulePush() {
+    if (!online || !profile || !stats) return;
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(function () {
+      rpc('submit_score', { p_uid: profile.uid, p_name: profile.name, p_streak: stats.streak, p_done: stats.done, p_total: stats.total })
+        .then(loadBoard).catch(function () {});
+    }, 1500);
+  }
+
+  function loadBoard() {
+    var list = document.getElementById('board'), msg = document.getElementById('boardmsg');
+    return rpc('get_leaderboard', { p_uid: profile ? profile.uid : null }).then(function (data) {
+      list.textContent = '';
+      msg.textContent = data.length ? '' : 'Noch niemand dabei. Sei der Erste!';
+      data.forEach(function (r) {
+        var li = document.createElement('li'), b = document.createElement('b');
+        var n = document.createElement('span'), t = document.createElement('small');
+        if (r.is_me) li.className = 'me';
+        b.textContent = r.streak + (r.streak === 1 ? ' Tag' : ' Tage');
+        n.textContent = r.name;
+        t.textContent = r.is_today ? r.done + '/' + r.total + ' heute' : 'heute noch nicht';
+        li.appendChild(b); li.appendChild(n); li.appendChild(t);
+        list.appendChild(li);
+      });
+    }).catch(function () { msg.textContent = 'Rangliste konnte nicht geladen werden.'; });
+  }
+
+  function showProfile() {
+    document.getElementById('join').hidden = !!profile;
+    document.getElementById('joined').hidden = !profile;
+    if (profile) document.getElementById('myname').textContent = profile.name;
+  }
+
+  if (online) {
+    document.getElementById('rank').hidden = false;
+    try { profile = JSON.parse(localStorage.getItem('winterarc-profile')); } catch (e) {}
+    showProfile();
+    document.getElementById('join').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = document.getElementById('nick').value.trim().slice(0, 20);
+      if (!name) return;
+      profile = { uid: uuid(), name: name };
+      try { localStorage.setItem('winterarc-profile', JSON.stringify(profile)); } catch (x) {}
+      showProfile();
+      schedulePush();
+    });
+    document.getElementById('leave').addEventListener('click', function () {
+      rpc('delete_score', { p_uid: profile.uid }).then(function () {
+        profile = null;
+        try { localStorage.removeItem('winterarc-profile'); } catch (x) {}
+        showProfile();
+        loadBoard();
+      }).catch(function () {
+        document.getElementById('boardmsg').textContent = 'Austragen hat nicht geklappt. Versuch es später noch einmal.';
+      });
+    });
+    document.getElementById('refresh').addEventListener('click', loadBoard);
+    loadBoard();
+  }
+
+  // ---- Geräte verbinden: Fortschritt online speichern (nur nach Zustimmung) ----
+  var syncId = null, syncTimer = null;
+
+  function lastDays() {
+    var o = {};
+    Object.keys(days).sort().slice(-200).forEach(function (k) { o[k] = days[k]; });
+    return o;
+  }
+
+  function pushSync() {
+    if (!online || !syncId) return;
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(function () {
+      rpc('save_progress', { p_uid: syncId, p_data: { days: lastDays() } }).catch(function () {});
+    }, 1000);
+  }
+
+  // Pro Tag gewinnt der zuletzt geänderte Stand
+  function pullSync() {
+    if (!online || !syncId) return Promise.resolve();
+    return rpc('load_progress', { p_uid: syncId }).then(function (remote) {
+      var rd = remote && remote.days;
+      if (!rd) { pushSync(); return; }
+      var changed = false;
+      Object.keys(rd).forEach(function (k) {
+        if (Array.isArray(rd[k])) return;
+        if (!days[k] || (rd[k]._t || 0) > (days[k]._t || 0)) { days[k] = rd[k]; changed = true; }
+      });
+      if (changed) {
+        entry = days[today] = days[today] || {};
+        try { localStorage.setItem(KEY, JSON.stringify(days)); } catch (e) {}
+        render();
+      }
+      var newer = Object.keys(days).some(function (k) { return !rd[k] || (days[k]._t || 0) > (rd[k]._t || 0); });
+      if (newer) pushSync();
+    }).catch(function () {});
+  }
+
+  function setSync(id) {
+    syncId = id;
+    try { if (id) localStorage.setItem('winterarc-sync', id); else localStorage.removeItem('winterarc-sync'); } catch (e) {}
+    document.getElementById('syncOff').hidden = !!id;
+    document.getElementById('syncOnBox').hidden = !id;
+    if (id) document.getElementById('synccode').textContent = id;
+  }
+
+  if (online) {
+    var syncMsg = document.getElementById('syncmsg');
+    document.getElementById('sync').hidden = false;
+    var saved = null;
+    try { saved = localStorage.getItem('winterarc-sync'); } catch (e) {}
+    setSync(saved);
+
+    document.getElementById('syncStart').addEventListener('click', function () {
+      setSync(uuid());
+      pushSync();
+      syncMsg.textContent = '';
+    });
+    document.getElementById('link').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var c = document.getElementById('othercode').value.trim().toLowerCase();
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(c)) {
+        syncMsg.textContent = 'Das ist kein gültiger Code.';
+        return;
+      }
+      rpc('load_progress', { p_uid: c }).then(function (r) {
+        if (!r) { syncMsg.textContent = 'Zu diesem Code wurde nichts gefunden.'; return; }
+        setSync(c);
+        syncMsg.textContent = 'Verbunden.';
+        return pullSync();
+      }).catch(function () { syncMsg.textContent = 'Verbinden hat nicht geklappt. Versuch es später noch einmal.'; });
+    });
+    document.getElementById('copycode').addEventListener('click', function () {
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(syncId).then(function () { syncMsg.textContent = 'Code kopiert.'; }, function () {});
+    });
+    document.getElementById('syncStop').addEventListener('click', function () {
+      if (!confirm('Online-Speicher löschen und dieses Gerät trennen? Der Fortschritt auf diesem Gerät bleibt erhalten.')) return;
+      rpc('delete_progress', { p_uid: syncId }).then(function () {
+        setSync(null);
+        syncMsg.textContent = 'Online gelöscht und getrennt.';
+      }).catch(function () { syncMsg.textContent = 'Löschen hat nicht geklappt. Versuch es später noch einmal.'; });
+    });
+    pullSync();
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) pullSync(); });
+    // Alle 10 Sekunden Stand anderer Geräte und Rangliste nachladen (nur bei sichtbarer Seite)
+    setInterval(function () {
+      if (document.hidden) return;
+      pullSync();
+      loadBoard();
+    }, 10000);
+  }
+
+  render();
+
+  // Neuer Tag, während die App im Hintergrund war: neu laden
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden && iso(new Date()) !== today) location.reload();
+  });
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
+})();
+</script>
+</body>
+</html>
